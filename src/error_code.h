@@ -76,6 +76,8 @@ enum Value {
   JSON_PARSE_ERROR = 30,
   REMOVED = 31,
   CHECKSUM_ERROR = 32,
+  RESOURCE_FORBIDDEN= 101,
+  MAX_HTTP_FORBIDDEN=102,
 };
 
 } // namespace error_code

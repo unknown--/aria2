@@ -144,6 +144,7 @@
 #define MSG_VERIFICATION_FAILED _("Checksum error detected. file=%s")
 #define MSG_INCOMPLETE_RANGE _("Incomplete range specified. %s")
 #define MSG_STRING_INTEGER_CONVERSION_FAILURE _("Failed to convert string into value: %s")
+#define MSG_RESOURCE_FORBIDDEN _("Resource forbidden")
 #define MSG_RESOURCE_NOT_FOUND _("Resource not found")
 #define MSG_FILE_RENAMED _("File already exists. Renamed to %s.")
 #define MSG_CANNOT_PARSE_METALINK _("Cannot parse metalink XML file. XML may be malformed.")

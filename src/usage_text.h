@@ -468,6 +468,15 @@
     "                              connection to HTTP/FTP/proxy server. After the\n" \
     "                              connection is established, this option makes no\n" \
     "                              effect and --timeout option is used instead.")
+#define TEXT_MAX_HTTP_FORBIDDEN                                         \
+  _(" --max-http-forbidden=NUM     If aria2 receives `forbidden' status from the\n" \
+    "                              remote HTTPservers NUM times without getting\n" \
+    "                              a single byte, then force the download to fail.\n" \
+    "                              Specify 0 to disable this option.\n" \
+    "                              This options is effective only when using\n" \
+    "                              HTTPservers. The number of retry attempt is\n" \
+    "                              counted toward --max-tries, so it should be\n" \
+    "                              configured too.")
 #define TEXT_MAX_FILE_NOT_FOUND                                         \
   _(" --max-file-not-found=NUM     If aria2 receives `file not found' status from the\n" \
     "                              remote HTTP/FTP servers NUM times without getting\n" \

@@ -213,6 +213,14 @@ bool HttpSkipResponseCommand::processResponse()
         return prepareForRetry(0);
       }
       throw DL_ABORT_EX2(EX_AUTH_FAILED, error_code::HTTP_AUTH_FAILED);
+    case 400:
+    case 403:
+      if (getOption()->getAsInt(PREF_MAX_HTTP_FORBIDDEN) == 0) {
+        throw DL_ABORT_EX2(MSG_RESOURCE_FORBIDDEN,
+                           error_code::RESOURCE_FORBIDDEN);
+      }
+      throw DL_RETRY_EX2(MSG_RESOURCE_FORBIDDEN,
+                         error_code::RESOURCE_FORBIDDEN);
     case 404:
       if (getOption()->getAsInt(PREF_MAX_FILE_NOT_FOUND) == 0) {
         throw DL_ABORT_EX2(MSG_RESOURCE_NOT_FOUND,
@@ -220,6 +228,7 @@ bool HttpSkipResponseCommand::processResponse()
       }
       throw DL_RETRY_EX2(MSG_RESOURCE_NOT_FOUND,
                          error_code::RESOURCE_NOT_FOUND);
+    case 500:
     case 502:
     case 503:
       // Only retry if pretry-wait > 0. Hammering 'busy' server is not
