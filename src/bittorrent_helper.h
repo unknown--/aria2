@@ -50,6 +50,7 @@
 #include "util.h"
 #include "DownloadContext.h"
 #include "TimeA2.h"
+#include "LogFactory.h"
 
 namespace aria2 {
 
