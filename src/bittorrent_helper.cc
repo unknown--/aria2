@@ -216,6 +216,8 @@ void extractFileEntries(const std::shared_ptr<DownloadContext>& ctx,
     fileEntries.reserve(filesList->size());
     int64_t length = 0;
     int64_t offset = 0;
+    int64_t fileIndex = 1;
+    std::string selectedFileIndex = "";
     // multi-file mode
     torrent->mode = BT_FILE_MODE_MULTI;
     for (auto& f : *filesList) {
@@ -293,7 +295,27 @@ void extractFileEntries(const std::shared_ptr<DownloadContext>& ctx,
       fileEntry->setSuffixPath(suffixPath);
       fileEntry->setMaxConnectionPerServer(maxConn);
       fileEntries.push_back(fileEntry);
+
+      std::string filename = strjoin(pathelem.end()-1, pathelem.end(),' ',std::ptr_fun(util::encodeNonUtf8));
+      if( filename.find("_____padding_file_")!=std::string::npos && filename.find("BitComet")!=std::string::npos ){
+          A2_LOG_NOTICE(fmt("ignoring file: %s",filename.c_str()));
+      }else if( filename.find("RARBG.txt")!=std::string::npos ){
+          A2_LOG_NOTICE(fmt("ignoring file: %s",filename.c_str()) );
+      }else if( filename.find("RARBG_DO_NOT_MIRROR.exe")!=std::string::npos ){
+          A2_LOG_NOTICE(fmt("ignoring file: %s",filename.c_str()));
+      }else{
+          selectedFileIndex += std::to_string(fileIndex)+",";
+      }
+
       offset += fileEntry->getLength();
+      fileIndex += 1;
+
+    }
+    if(option->get(PREF_SELECT_FILE).empty()){
+        A2_LOG_NOTICE(fmt("SYSTEM SET PREF_SELECT_FILE: %s",selectedFileIndex.c_str()));
+        option->put(PREF_SELECT_FILE,selectedFileIndex.c_str());
+    }else{
+        A2_LOG_NOTICE(fmt("GOT USER PREF_SELECT_FILE: %s",option->get(PREF_SELECT_FILE).c_str()));
     }
   }
   else {
