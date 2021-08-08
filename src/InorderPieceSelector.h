@@ -2,7 +2,7 @@
 /*
  * aria2 - The high speed download utility
  *
- * Copyright (C) 2006 Tatsuhiro Tsujikawa
+ * Copyright (C) 2020 Tatsuhiro Tsujikawa
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,64 +32,24 @@
  * files in the program, then also delete it here.
  */
 /* copyright --> */
-#ifndef D_DISK_WRITER_H
-#define D_DISK_WRITER_H
+#ifndef D_INORDER_PIECE_SELECTOR_H
+#define D_INORDER_PIECE_SELECTOR_H
 
-#include "BinaryStream.h"
+#include "PieceSelector.h"
+
+#include <memory>
 
 namespace aria2 {
 
-/**
- * Interface for writing to a binary stream of bytes.
- *
- */
-class DiskWriter : public BinaryStream {
+class InorderPieceSelector : public PieceSelector {
 public:
-  DiskWriter() {}
+  InorderPieceSelector();
+  virtual ~InorderPieceSelector();
 
-  virtual ~DiskWriter() = default;
-  /**
-   * Opens file. If the file exists, then it is truncated to 0 length.
-   */
-  virtual void initAndOpenFile(int64_t totalLength = 0) = 0;
-
-  virtual void openFile(int64_t totalLength = 0) = 0;
-
-  /**
-   * Closes this output stream.
-   */
-  // TODO we have to examine the return value of close()
-  virtual void closeFile() = 0;
-
-  /**
-   * Opens a file.  If the file doesnot exists, an exception may be
-   * thrown.
-   */
-  virtual void openExistingFile(int64_t totalLength = 0) = 0;
-
-  // Returns file length
-  virtual int64_t size() = 0;
-
-  // Enables read-only mode. After this call, openExistingFile() opens
-  // file in read-only mode. This is an optional functionality. The
-  // default implementation is do nothing.
-  virtual void enableReadOnly() {}
-
-  // Disables read-only mode. After this call, openExistingFile()
-  // opens file in read/write mode. This is an optional
-  // functionality. The default implementation is do noting.
-  virtual void disableReadOnly() {}
-
-  // Enables mmap.
-  virtual void enableMmap() {}
-
-  // Drops cache in range [offset, offset + len)
-  virtual void dropCache(int64_t len, int64_t offset) {}
-
-  // Force physical write of data from OS buffer cache.
-  virtual void flushOSBuffers() {}
+  virtual bool select(size_t& index, const unsigned char* bitfield,
+                      size_t nbits) const CXX11_OVERRIDE;
 };
 
 } // namespace aria2
 
-#endif // D_DISK_WRITER_H
+#endif // D_INORDER_PIECE_SELECTOR_H
