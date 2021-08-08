@@ -139,6 +139,7 @@ RequestGroup::RequestGroup(const std::shared_ptr<GroupId>& gid,
       numStreamConnection_(0),
       numStreamCommand_(0),
       numCommand_(0),
+      httpForbiddenCount_(0),
       fileNotFoundCount_(0),
       maxDownloadSpeedLimit_(option->getAsInt(PREF_MAX_DOWNLOAD_LIMIT)),
       maxUploadSpeedLimit_(option->getAsInt(PREF_MAX_UPLOAD_LIMIT)),
@@ -1254,6 +1255,17 @@ void RequestGroup::updateLastModifiedTime(const Time& time)
 {
   if (time.good() && lastModifiedTime_ < time) {
     lastModifiedTime_ = time;
+  }
+}
+void RequestGroup::increaseAndValidateHttpForbidden()
+{
+  ++httpForbiddenCount_;
+  const int maxCount = option_->getAsInt(PREF_MAX_HTTP_FORBIDDEN);
+  if (maxCount > 0 && httpForbiddenCount_ >= maxCount &&
+      downloadContext_->getNetStat().getSessionDownloadLength() == 0) {
+    throw DOWNLOAD_FAILURE_EXCEPTION2(
+        fmt("Reached max-http-forbidden count=%d", maxCount),
+        error_code::MAX_HTTP_FORBIDDEN);
   }
 }
 

@@ -189,6 +189,16 @@ Opções HTTP / FTP
   O número máximo de conexões para um servidor em cada download.
   Padrão: ``1``
 
+
+.. option:: --max-http-forbidden=<NÚMERO>
+
+  Se aria2 recebe çódigo de retorno "proibido" de um servidor
+  remoto de HTTP um NÚMERO de vezes sem obter nenhum byte, então o
+  download é forçado a falhar.
+  Especificar ``0`` para desabilitar esta opção. Esta opção só é válida
+  para servidores HTTP.
+  Padrão: ``0``
+
 .. option:: --max-file-not-found=<NÚMERO>
 
   Se aria2 recebe çódigo de retorno "arquivo não encontrado" de um servidor
@@ -1670,6 +1680,13 @@ retorno ou saída com base no último erro encontrado.
 30
   Se aria2 não pode passar uma requisição JSON-RPC.
 
+101
+   Se o recurso foi proibido.
+
+102
+  Se aria2 viu o número especificado de erro "recurso foi proibido".
+  Ver opção :option:`--max-http-forbidden` option.
+
 .. note::
 
   Um erro ocorrido em um download completado não será reportado como um 
@@ -1898,6 +1915,7 @@ URI. Estas linhas opcionais precisam iniciar com um ou mais espaços.
   * :option:`lowest-speed-limit <--lowest-speed-limit>`
   * :option:`max-connection-per-server <-x>`
   * :option:`max-download-limit <--max-download-limit>`
+  * :option:`max-http-forbidden <--max-http-forbidden>`
   * :option:`max-file-not-found <--max-file-not-found>`
   * :option:`max-resume-failure-tries <--max-resume-failure-tries>`
   * :option:`max-tries <-m>`

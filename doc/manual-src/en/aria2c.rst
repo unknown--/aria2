@@ -185,6 +185,17 @@ HTTP/FTP/SFTP Options
   The maximum number of connections to one server for each download.
   Default: ``1``
 
+.. option:: --max-http-forbidden=<NUM>
+
+  If aria2 receives "forbidden" status from the remote HTTP
+  servers NUM times without getting a single byte, then force the
+  download to fail. Specify ``0`` to disable this option. This options
+  is effective only when using HTTP servers.  The number of retry
+  attempt is counted toward :option:`--max-tries`, so it should be
+  configured too.
+
+  Default: ``0``
+
 .. option:: --max-file-not-found=<NUM>
 
   If aria2 receives "file not found" status from the remote HTTP/FTP
@@ -1936,6 +1947,13 @@ based on the last error encountered.
 32
   If checksum validation failed.
 
+101
+   If resource was forbidden.
+
+102
+  If aria2 saw the specified number of "resource was forbidden" error.
+  See :option:`--max-http-forbidden` option.
+
 .. note::
 
   An error occurred in a finished download will not be reported
@@ -2195,6 +2213,7 @@ of URIs. These optional lines must start with white space(s).
   * :option:`lowest-speed-limit <--lowest-speed-limit>`
   * :option:`max-connection-per-server <-x>`
   * :option:`max-download-limit <--max-download-limit>`
+  * :option:`max-http-forbidden <--max-http-forbidden>`
   * :option:`max-file-not-found <--max-file-not-found>`
   * :option:`max-mmap-limit <--max-mmap-limit>`
   * :option:`max-resume-failure-tries <--max-resume-failure-tries>`

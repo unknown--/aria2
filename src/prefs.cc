@@ -261,6 +261,8 @@ PrefPtr PREF_SERVER_STAT_OF = makePref("server-stat-of");
 // value: true | false
 PrefPtr PREF_REMOTE_TIME = makePref("remote-time");
 // value: 1*digit
+PrefPtr PREF_MAX_HTTP_FORBIDDEN = makePref("max-http-forbidden");
+// value: 1*digit
 PrefPtr PREF_MAX_FILE_NOT_FOUND = makePref("max-file-not-found");
 // value: epoll | select
 PrefPtr PREF_EVENT_POLL = makePref("event-poll");

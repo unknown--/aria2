@@ -43,6 +43,7 @@ OptionParser.new do |opt|
     options["dry-run"]=val||"true"
   }
   opt.on("--lowest-speed-limit SPEED"){|val| options["lowest-speed-limit"]=val}
+  opt.on("--max-http-forbidden NUM"){|val| options["max-http-forbidden"]=val}
   opt.on("--max-file-not-found NUM"){|val| options["max-file-not-found"]=val}
   opt.on("-m","--max-tries N"){|val| options["max-tries"]=val}
   opt.on("--no-proxy DOMAINS"){|val| options["no-proxy"]=val}

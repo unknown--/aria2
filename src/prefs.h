@@ -214,6 +214,8 @@ extern PrefPtr PREF_SERVER_STAT_OF;
 // value: true | false
 extern PrefPtr PREF_REMOTE_TIME;
 // value: 1*digit
+extern PrefPtr PREF_MAX_HTTP_FORBIDDEN;
+// value: 1*digit
 extern PrefPtr PREF_MAX_FILE_NOT_FOUND;
 // value: epoll | select
 extern PrefPtr PREF_EVENT_POLL;

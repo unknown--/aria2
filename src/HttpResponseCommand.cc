@@ -239,6 +239,9 @@ bool HttpResponseCommand::executeInternal()
   }
 
   if (statusCode >= 300) {
+    if (statusCode == 403) {
+      grp->increaseAndValidateHttpForbidden();
+    }
     if (statusCode == 404) {
       grp->increaseAndValidateFileNotFoundCount();
     }

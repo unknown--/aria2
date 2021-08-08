@@ -155,6 +155,8 @@ private:
 
   int numCommand_;
 
+  int httpForbiddenCount_;
+
   int fileNotFoundCount_;
 
   int maxDownloadSpeedLimit_;
@@ -413,6 +415,8 @@ public:
   void applyLastModifiedTimeToLocalFiles();
 
   void updateLastModifiedTime(const Time& time);
+
+  void increaseAndValidateHttpForbidden();
 
   void increaseAndValidateFileNotFoundCount();
 
