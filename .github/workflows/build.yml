@@ -74,7 +74,7 @@ jobs:
         if: ${{ runner.os == 'macOS' && matrix.arch == 'amd64' }}
         uses: actions/upload-artifact@master
         with:
-          name: aria2c-macos-amd64
+          name: aria2c-macos-${{ matrix.arch }}
           path: ./artifact/
       - name: upload Linux aria2c
         if: runner.os == 'Linux'
